@@ -1,0 +1,33 @@
+// IONIC
+ion-button {
+  margin: 12px;
+}
+
+ion-checkbox {
+  margin-left: 16px;
+}
+
+// HTML
+p {
+  font-size: 14px;
+}
+
+.pick-image {
+  display: none !important;
+}
+
+.action-sheet-button.sc-ion-action-sheet-md {
+  border-bottom: 1px solid #e3e3e3;
+}
+
+ion-app {
+  width: 100%;
+  max-width: 580px;
+  margin: 0px auto;
+}
+
+ion-text {
+  .small {
+    font-size: 12px;
+  }
+}

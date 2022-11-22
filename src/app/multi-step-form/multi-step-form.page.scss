@@ -1,0 +1,281 @@
+:host {
+  --ion-color-primary-btn: #1396bf;
+  --inner-padding-end: 0 !important;
+  --ion-color-yellow: #ffff02;
+  --bs-body-bg: #f8f9fa;
+}
+
+h4 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #262626;
+}
+ion-header {
+  .logo-image {
+    background: url(../../assets/bee_logo.png) no-repeat center center;
+    background-size: auto 35px;
+  }
+  .titlerow {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: var(--ion-color-secondary-contrast);
+    span {
+      font-size: 0.8rem;
+      color: var(--ion-color-yellow);
+    }
+  }
+}
+.label-stacked {
+  transform: translateY(50%) scale(0.9);
+}
+ion-item {
+  --padding-start: 0;
+  --background-focused: transparent;
+  --border-width: 0px !important;
+  ion-label {
+    margin-bottom: 15px;
+    display: block;
+    width: 100%;
+  }
+  ion-input,
+  ion-textarea,
+  ion-select,
+  ion-datetime,
+  select,
+  textarea,
+  input {
+    border-radius: 7px;
+    font-size: 13px;
+    --padding-start: 10px;
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+    --padding-end: 10px;
+    // background: #e7f5f4 !important;
+    border: 1px solid #ced4da !important;
+    border: none;
+    width: 100%;
+  }
+}
+ion-list {
+  padding-top: 0px;
+  padding-bottom: 1px;
+}
+.radiobox {
+  color: var(--bs-body-color);
+  margin-top: 8px;
+  .radio-label {
+    margin-bottom: 0.5rem;
+    transform: translateY(50%) scale(0.9);
+    font-size: 14px;
+  }
+  ion-radio-group {
+    display: flex;
+    .radioitem {
+      position: relative;
+      margin-right: 0.5rem;
+      ion-radio {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+      }
+      ion-label {
+        background: #6c757d;
+        color: #ffffff;
+        padding: 0.4rem 0.8rem;
+        display: flex;
+        margin-bottom: 0px;
+        border-radius: 5px;
+        border: 1px solid transparent;
+      }
+      .radio-checked + ion-label {
+        background: var(--ion-color-yellow);
+        color: var(--ion-color-warning-contrast);
+        border: 1px solid var(--ion-color-warning-contrast);
+      }
+    }
+  }
+}
+
+.avatarImg {
+  height: 35px;
+  width: 100%;
+  margin: 0px 0px !important;
+  max-height: 35px !important;
+}
+
+.toolbar-content {
+  max-height: 80px !important;
+}
+
+.preview-image {
+  width: 100%;
+  object-fit: cover;
+}
+
+#myFileInput {
+  position: absolute;
+  opacity: 0;
+}
+
+.myFakeUploadButton {
+  height: 50px;
+  width: 100px;
+}
+
+ion-col {
+  --ion-grid-column-padding: 0 5px;
+}
+
+ion-slides {
+  height: 100%;
+  ion-slide {
+    align-items: flex-start;
+  }
+  .swiper-slide {
+    visibility: hidden;
+  }
+  .swiper-slide.swiper-slide-active {
+    visibility: visible;
+  }
+}
+
+ion-list-header ion-label {
+  margin-top: 16px;
+}
+
+select,
+input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  // padding: 8px 6px;
+}
+
+.line {
+  height: 3px;
+  background: var(--ion-color-light-shade);
+  top: 14px;
+  z-index: -1;
+}
+
+.img-thumb {
+  width: 45px;
+  height: 55px;
+  object-fit: cover;
+  display: block;
+}
+
+#completionIcon {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  display: block;
+  color: green;
+}
+
+#errorIcon {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  display: block;
+}
+
+.circle-radius {
+  border-radius: 50%;
+}
+
+.completed-icon {
+  position: absolute;
+  margin-left: -25px;
+  top: 12px;
+  font-size: 20px;
+}
+
+form {
+  width: 100%;
+}
+
+.pick-image {
+  display: none;
+}
+
+ion-radio {
+  --border-radius: 100%;
+  --inner-border-radius: 100%;
+  --color: #ddd;
+  --color-checked: var(--ion-color-primary);
+}
+
+ion-radio.ios {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+}
+
+.radio-checked.ios {
+  border-color: #6815ec;
+}
+
+.workbox {
+  list-style: none;
+  text-align: center;
+  img {
+    display: inline-block;
+  }
+  span {
+    display: block;
+  }
+}
+
+.selfie {
+  height: 50vh;
+  width: auto;
+}
+.driverfront {
+  max-height: 50vh;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.terms-title {
+  background: var(--ion-color-warning);
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-left: -16px;
+  margin-right: -16px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+ion-card-header.ios {
+  display: flex;
+  flex-flow: column-reverse;
+}
+
+.salecontact {
+  padding-top: 8px;
+  h4 {
+    margin-bottom: 0px;
+  }
+}
+.fileupload {
+  padding-top: 8px;
+  color: var(--bs-body-color);
+}
+.textblock {
+  font-size: 14px;
+  color: var(--bs-body-color);
+  ul {
+    li {
+      font-size: 14px;
+      color: var(--bs-body-color);
+    }
+  }
+}

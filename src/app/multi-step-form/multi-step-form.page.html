@@ -1,0 +1,1374 @@
+<ion-header *ngIf="currentSlide != 'desktop'">
+    <ion-toolbar>
+        <ion-title size="small">
+            <div class="d-flex align-items-center">
+                <div class="avatarImg logo-image"></div>
+                <span class="flex-fill"></span>
+            </div>
+        </ion-title>
+    </ion-toolbar>
+    <div class="ion-padding titlerow" [style.background]="'var(--ion-color-warning-contrast)'">
+        <h6 class="mb-0 d-inline"> {{ nextSteps[currentSlide]['label'] }} </h6>
+        <span color="dark" class="float-end"
+            *ngIf="currentSlide != 'declaration' && currentSlide != 'credit-check' && currentSlide != 'final-confirmation'">Step
+            {{ nextSteps[currentSlide]['no'] }} of 6</span>
+    </div>
+</ion-header>
+
+<ion-content class="h-100">
+
+    <ng-container class="d-flex h-100">
+
+        <div *ngIf="currentSlide == 'desktop'">
+            <h1 style="text-align: center;margin:100px 0; font-family: sans-serif">
+
+                Please open this link in Mobile Or Tablet to View the website.</h1>
+        </div>
+
+        <div *ngIf="currentSlide == 'entity-information'">
+
+            <ion-label> {{slide}} </ion-label>
+            <ion-card>
+                <ion-card-content>
+                    <!-- <form #entityInformation="ngForm" (ngSubmit)="onSubmit(entityInformation)"> -->
+                    <div class="radiobox">
+                        <ion-label position="stacked" size="12" class="radio-label">Change of
+                            Owner</ion-label>
+                        <ion-radio-group [(ngModel)]="ChangeOwner">
+                            <div class="radioitem">
+                                <ion-radio id="yes" value="1"></ion-radio>
+                                <ion-label for="yes">Yes</ion-label>
+                            </div>
+                            <div class="radioitem">
+                                <ion-radio id="no" value="0"></ion-radio>
+                                <ion-label for="no">No</ion-label>
+                            </div>
+                        </ion-radio-group>
+                    </div>
+                    <ion-item lines="none" *ngIf="ChangeOwner == '1'">
+                        <ion-label position="stacked">Current CTP</ion-label>
+                        <ion-input type="text" placeholder="Please enter" [(ngModel)]="EntityInformation.CurrentCTP">
+                        </ion-input>
+                    </ion-item>
+                    <ion-list>
+                        <ion-item>
+                            <ion-label position="stacked">Type of Account</ion-label>
+                            <ion-select interface="action-sheet" placeholder="Please Select"
+                                [(ngModel)]="EntityInformation.TypeofAccount">
+                                <ion-select-option value="New Account creation (alcohol)">New Account Creation
+                                    (Alcohol)
+                                </ion-select-option>
+                                <ion-select-option value="Change of ownership">Change of Ownership
+                                </ion-select-option>
+                                <ion-select-option value="New Account Creation (Non alcoholic)">New Account
+                                    Creation (Non Alcoholic)</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-list>
+
+                    <ion-list>
+                        <ion-item>
+                            <ion-label position="stacked">Legal Entity Type</ion-label>
+                            <ion-select interface="action-sheet" placeholder="Please Select"
+                                [(ngModel)]="EntityInformation.LegalEntity">
+                                <ion-select-option value="sole trader">Sole Trader</ion-select-option>
+                                <ion-select-option value="close corporation">Close Corporation
+                                </ion-select-option>
+                                <ion-select-option value="private company">Private Company</ion-select-option>
+                                <ion-select-option value="public company">Public Company</ion-select-option>
+                                <ion-select-option value="trust">Trust</ion-select-option>
+                                <ion-select-option value="club">Club</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-list>
+
+
+                    <div class="alert alert-info mt-3" role="alert" id="sole_trader"
+                        *ngIf="EntityInformation.LegalEntity == 'sole_trader'">
+                        <h6>Please have the following documentation available:</h6>
+                        <ul>
+                            <li>Company registration documents - if applicable</li>
+                            <li>Copy of ID</li>
+                            <li>Copy of Liquor License</li>
+                            <li>Copy of Liquor license renewal receipt</li>
+                            <li>Liquor Licence transfer documents if change of ownership</li>
+                            <li>Spouse ID – if applicable</li>
+                        </ul>
+                    </div>
+                    <div class="alert alert-info mt-3" id="close_corporation"
+                        *ngIf="EntityInformation.LegalEntity == 'close_corporation'">
+                        <h6>Please have the following documentation available:</h6>
+                        <ul>
+                            <li>Closed corporation registration documents</li>
+                            <li>Copy of ID documents of members</li>
+                            <li>Copy of Liquor License</li>
+                            <li>Copy of Liquor license renewal receipt</li>
+                            <li>VAT certificate if available</li>
+                            <li>Financial statements</li>
+                        </ul>
+                    </div>
+                    <div class="alert alert-info mt-3" id="private_company"
+                        *ngIf="EntityInformation.LegalEntity == 'private_company'">
+                        <h6>Please have the following documentation available:</h6>
+                        <ul>
+                            <li>Company registration documents</li>
+                            <li>Copy of ID documents of directors</li>
+                            <li>Copy of Liquor license</li>
+                            <li>Copy of Liquor license renewal receipt</li>
+                            <li>VAT certificate if available</li>
+                            <li>Financial statements</li>
+                        </ul>
+                    </div>
+                    <div class="alert alert-info mt-3" id="public_company"
+                        *ngIf="EntityInformation.LegalEntity == 'public_company'">
+                        <h6>Please have the following documentation available:</h6>
+                        <ul>
+                            <li>Company registration documents</li>
+                            <li>Copy of ID documents of directors</li>
+                            <li>Copy of liquor license</li>
+                            <li>Copy of liquor license renewal receipt</li>
+                            <li>VAT certificate if available</li>
+                        </ul>
+                    </div>
+                    <div class="alert alert-info mt-3" id="trust" *ngIf="EntityInformation.LegalEntity == 'trust'">
+                        <h6>Please have the following documentation available:</h6>
+                        <ul>
+                            <li>Trust registration documents</li>
+                            <li>Copy of ID documents of trustees</li>
+                            <li>Copy of liquor license</li>
+                            <li>Copy of liquor license renewal receipt</li>
+                            <li>VAT certificate if available</li>
+                        </ul>
+                    </div>
+                    <div class="alert alert-info mt-3" id="club" *ngIf="EntityInformation.LegalEntity == 'club'">
+                        <h6>Please have the following documentation available:</h6>
+                        <ul>
+                            <li>Club constitution</li>
+                            <li>Copy of ID documents of chairman</li>
+                            <li>Copy of liquor license</li>
+                            <li>Copy of liquor license renewal receipt</li>
+                            <li>VAT certificate if available</li>
+                        </ul>
+                    </div>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Trading Name</ion-label>
+                        <ion-input type="text" placeholder="Outlet Name (Know as by the public)"
+                            [(ngModel)]="EntityInformation.TradingName">
+                        </ion-input>
+                        <ion-text color="danger" *ngIf="EntityInformation.TradingName == ''">
+                            <span class="invalid-feedback text-danger">This field is required</span>
+                        </ion-text>
+                    </ion-item>
+
+                    <!-- </form> -->
+                </ion-card-content>
+            </ion-card>
+        </div>
+
+        <div class="w-100" *ngIf="currentSlide === 'liquor-license'">
+
+            <ion-card>
+                <ion-card-content>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Registered Name</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="LiquorLicense.RegisteredOutletName">
+                        </ion-input>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Registration Number</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="LiquorLicense.RegisteredNumber">
+                        </ion-input>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Liquor License Number</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="LiquorLicense.LiquorLicenseNumber">
+                        </ion-input>
+                    </ion-item>
+                    <ion-list>
+                        <ion-item>
+                            <ion-label position="stacked">Liquor License Type</ion-label>
+                            <ion-select interface="action-sheet" placeholder="Please Select"
+                                [(ngModel)]="LiquorLicense.LiquorLicenseType">
+                                <ion-select-option value="permanent_licence">Permanent Licence</ion-select-option>
+                                <ion-select-option value="temporarily_licence">Temporarily Licence</ion-select-option>
+                                <ion-select-option value="permit">Permit</ion-select-option>
+                                <ion-select-option value="licence_exempt">Licence Exempt</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-list>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Liquor License Owner</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="LiquorLicense.LiquorLicenseHolder">
+                        </ion-input>
+                    </ion-item>
+                </ion-card-content>
+            </ion-card>
+
+            <hr>
+
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>Liquor License Address</ion-card-title>
+                </ion-card-header>
+
+                <ion-card-content>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Street Number</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="LiquorLicense.StreetNumber">
+                        </ion-input>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Street Name</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="LiquorLicense.StreetName">
+                        </ion-input>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Suburb</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="LiquorLicense.Suburb"></ion-input>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">City</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="LiquorLicense.City"></ion-input>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Postal Code</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="LiquorLicense.PostalCode">
+                        </ion-input>
+                    </ion-item>
+                </ion-card-content>
+            </ion-card>
+        </div>
+
+        <div class="w-100 h-100" *ngIf="currentSlide == 'owner-details'">
+
+            <ion-card>
+                <ion-card-content>
+
+                    <!-- <ion-list>
+                        <ion-item>
+                            <ion-label position="stacked">Number of owners</ion-label>
+                            <ion-select interface="action-sheet" placeholder="Please Select"
+                                [(ngModel)]="OwnerDetails.NumberOfOwners">
+                                <ion-select-option value="1">1</ion-select-option>
+                                <ion-select-option value="2">2</ion-select-option>
+                                <ion-select-option value="3">3 </ion-select-option>
+                                <ion-select-option value="4">4</ion-select-option>
+                                <ion-select-option value="5 or more">5 or more</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-list> -->
+
+
+                    <ion-list>
+                        <ion-item>
+                            <ion-label position="stacked">Owner Title</ion-label>
+                            <ion-select interface="action-sheet" placeholder="Please Select"
+                                [(ngModel)]="OwnerDetails.OwnerTitle">
+                                <ion-select-option value="mr">Mr</ion-select-option>
+                                <ion-select-option value="mrs">Mrs</ion-select-option>
+                                <ion-select-option value="miss">Miss</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-list>
+
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Owner Name</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="OwnerDetails.OwnerName">
+                        </ion-input>
+                    </ion-item>
+
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Owner Surname</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="OwnerDetails.OwnerSurname">
+                        </ion-input>
+                    </ion-item>
+
+                    <ion-item lines="none">
+                        <ion-label position="stacked">ID Number</ion-label>
+                        <ion-input type="number" [(ngModel)]="OwnerDetails.IdNumber"></ion-input>
+                    </ion-item>
+
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Date of Birth</ion-label>
+                        <ion-datetime locale="es-ES" placeholder="DD/MM/YYYY" [(ngModel)]="OwnerDetails.DateofBirth">
+                        </ion-datetime>
+
+                    </ion-item>
+
+
+                    <ion-list>
+                        <ion-item>
+                            <ion-label position="stacked">Nationality</ion-label>
+                            <ion-select interface="action-sheet" placeholder="Please Select"
+                                [(ngModel)]="OwnerDetails.Nationality">
+                                <ion-select-option value="South Africa">South Africa</ion-select-option>
+                                <ion-select-option value="Afghanistan">Afghanistan</ion-select-option>
+                                <ion-select-option value="Åland Islands">Åland Islands</ion-select-option>
+                                <ion-select-option value="Albania">Albania</ion-select-option>
+                                <ion-select-option value="Algeria">Algeria</ion-select-option>
+                                <ion-select-option value="American Samoa">American Samoa</ion-select-option>
+                                <ion-select-option value="Andorra">Andorra</ion-select-option>
+                                <ion-select-option value="Angola">Angola</ion-select-option>
+                                <ion-select-option value="Anguilla">Anguilla</ion-select-option>
+                                <ion-select-option value="Antarctica">Antarctica</ion-select-option>
+                                <ion-select-option value="Antigua and Barbuda">Antigua and Barbuda</ion-select-option>
+                                <ion-select-option value="Argentina">Argentina</ion-select-option>
+                                <ion-select-option value="Armenia">Armenia</ion-select-option>
+                                <ion-select-option value="Aruba">Aruba</ion-select-option>
+                                <ion-select-option value="Australia">Australia</ion-select-option>
+                                <ion-select-option value="Austria">Austria</ion-select-option>
+                                <ion-select-option value="Azerbaijan">Azerbaijan</ion-select-option>
+                                <ion-select-option value="Bahamas">Bahamas</ion-select-option>
+                                <ion-select-option value="Bahrain">Bahrain</ion-select-option>
+                                <ion-select-option value="Bangladesh">Bangladesh</ion-select-option>
+                                <ion-select-option value="Barbados">Barbados</ion-select-option>
+                                <ion-select-option value="Belarus">Belarus</ion-select-option>
+                                <ion-select-option value="Belgium">Belgium</ion-select-option>
+                                <ion-select-option value="Belize">Belize</ion-select-option>
+                                <ion-select-option value="Benin">Benin</ion-select-option>
+                                <ion-select-option value="Bermuda">Bermuda</ion-select-option>
+                                <ion-select-option value="Bhutan">Bhutan</ion-select-option>
+                                <ion-select-option value="Bolivia">Bolivia</ion-select-option>
+                                <!-- <ion-select-option value="Bosnia and Herzegovina">Bosnia and Herzegovina
+                                </ion-select-option>
+                                <ion-select-option value="Botswana">Botswana</ion-select-option>
+                                <ion-select-option value="Bouvet Island">Bouvet Island</ion-select-option>
+                                <ion-select-option value="Brazil">Brazil</ion-select-option>
+                                <ion-select-option value="British Indian Ocean Territory">British Indian Ocean Territory
+                                </ion-select-option>
+                                <ion-select-option value="Brunei Darussalam">Brunei Darussalam</ion-select-option>
+                                <ion-select-option value="Bulgaria">Bulgaria</ion-select-option>
+                                <ion-select-option value="Burkina Faso">Burkina Faso</ion-select-option>
+                                <ion-select-option value="Burundi">Burundi</ion-select-option>
+                                <ion-select-option value="Cambodia">Cambodia</ion-select-option>
+                                <ion-select-option value="Cameroon">Cameroon</ion-select-option>
+                                <ion-select-option value="Canada">Canada</ion-select-option>
+                                <ion-select-option value="Cape Verde">Cape Verde</ion-select-option>
+                                <ion-select-option value="Cayman Islands">Cayman Islands</ion-select-option>
+                                <ion-select-option value="Central African Republic">Central African Republic
+                                </ion-select-option>
+                                <ion-select-option value="Chad">Chad</ion-select-option>
+                                <ion-select-option value="Chile">Chile</ion-select-option>
+                                <ion-select-option value="China">China</ion-select-option>
+                                <ion-select-option value="Christmas Island">Christmas Island</ion-select-option>
+                                <ion-select-option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands
+                                </ion-select-option>
+                                <ion-select-option value="Colombia">Colombia</ion-select-option>
+                                <ion-select-option value="Comoros">Comoros</ion-select-option>
+                                <ion-select-option value="Congo">Congo</ion-select-option>
+                                <ion-select-option value="Congo The Democratic Republic of The">Congo, The Democratic
+                                    Republic of The</ion-select-option>
+                                <ion-select-option value="Cook Islands">Cook Islands</ion-select-option>
+                                <ion-select-option value="Costa Rica">Costa Rica</ion-select-option>
+                                <ion-select-option value="Cote D'ivoire">Cote D'ivoire</ion-select-option>
+                                <ion-select-option value="Croatia">Croatia</ion-select-option>
+                                <ion-select-option value="Cuba">Cuba</ion-select-option>
+                                <ion-select-option value="Cyprus">Cyprus</ion-select-option>
+                                <ion-select-option value="Czech Republic">Czech Republic</ion-select-option>
+                                <ion-select-option value="Denmark">Denmark</ion-select-option>
+                                <ion-select-option value="Djibouti">Djibouti</ion-select-option>
+                                <ion-select-option value="Dominica">Dominica</ion-select-option>
+                                <ion-select-option value="Dominican Republic">Dominican Republic
+                                </ion-select-option>
+                                <ion-select-option value="Ecuador">Ecuador</ion-select-option>
+                                <ion-select-option value="Egypt">Egypt</ion-select-option>
+                                <ion-select-option value="El Salvador">El Salvador</ion-select-option>
+                                <ion-select-option value="Equatorial Guinea">Equatorial Guinea
+                                </ion-select-option>
+                                <ion-select-option value="Eritrea">Eritrea</ion-select-option>
+                                <ion-select-option value="Estonia">Estonia</ion-select-option>
+                                <ion-select-option value="Ethiopia">Ethiopia</ion-select-option>
+                                <ion-select-option value="Falkland Islands (Malvinas)">Falkland Islands
+                                    (Malvinas)
+                                </ion-select-option>
+                                <ion-select-option value="Faroe Islands">Faroe Islands</ion-select-option>
+                                <ion-select-option value="Fiji">Fiji</ion-select-option>
+                                <ion-select-option value="Finland">Finland</ion-select-option>
+                                <ion-select-option value="France">France</ion-select-option>
+                                <ion-select-option value="French Guiana">French Guiana</ion-select-option>
+                                <ion-select-option value="French Polynesia">French Polynesia</ion-select-option>
+                                <ion-select-option value="French Southern Territories">French Southern
+                                    Territories
+                                </ion-select-option>
+                                <ion-select-option value="Gabon">Gabon</ion-select-option>
+                                <ion-select-option value="Gambia">Gambia</ion-select-option>
+                                <ion-select-option value="Georgia">Georgia</ion-select-option>
+                                <ion-select-option value="Germany">Germany</ion-select-option>
+                                <ion-select-option value="Ghana">Ghana</ion-select-option>
+                                <ion-select-option value="Gibraltar">Gibraltar</ion-select-option>
+                                <ion-select-option value="Greece">Greece</ion-select-option>
+                                <ion-select-option value="Greenland">Greenland</ion-select-option>
+                                <ion-select-option value="Grenada">Grenada</ion-select-option>
+                                <ion-select-option value="Guadeloupe">Guadeloupe</ion-select-option>
+                                <ion-select-option value="Guam">Guam</ion-select-option>
+                                <ion-select-option value="Guatemala">Guatemala</ion-select-option>
+                                <ion-select-option value="Guernsey">Guernsey</ion-select-option>
+                                <ion-select-option value="Guinea">Guinea</ion-select-option>
+                                <ion-select-option value="Guinea-bissau">Guinea-bissau</ion-select-option>
+                                <ion-select-option value="Guyana">Guyana</ion-select-option>
+                                <ion-select-option value="Haiti">Haiti</ion-select-option>
+                                <ion-select-option value="Heard Island and Mcdonald Islands">Heard Island and
+                                    Mcdonald Islands</ion-select-option>
+                                <ion-select-option value="Holy See (Vatican City State)">Holy See (Vatican City
+                                    State)</ion-select-option>
+                                <ion-select-option value="Honduras">Honduras</ion-select-option>
+                                <ion-select-option value="Hong Kong">Hong Kong</ion-select-option>
+                                <ion-select-option value="Hungary">Hungary</ion-select-option>
+                                <ion-select-option value="Iceland">Iceland</ion-select-option>
+                                <ion-select-option value="India">India</ion-select-option>
+                                <ion-select-option value="Indonesia">Indonesia</ion-select-option>
+                                <ion-select-option value="Iran, Islamic Republic of">Iran, Islamic Republic of
+                                </ion-select-option>
+                                <ion-select-option value="Iraq">Iraq</ion-select-option>
+                                <ion-select-option value="Ireland">Ireland</ion-select-option>
+                                <ion-select-option value="Isle of Man">Isle of Man</ion-select-option>
+                                <ion-select-option value="Israel">Israel</ion-select-option>
+                                <ion-select-option value="Italy">Italy</ion-select-option>
+                                <ion-select-option value="Jamaica">Jamaica</ion-select-option>
+                                <ion-select-option value="Japan">Japan</ion-select-option>
+                                <ion-select-option value="Jersey">Jersey</ion-select-option>
+                                <ion-select-option value="Jordan">Jordan</ion-select-option>
+                                <ion-select-option value="Kazakhstan">Kazakhstan</ion-select-option>
+                                <ion-select-option value="Kenya">Kenya</ion-select-option>
+                                <ion-select-option value="Kiribati">Kiribati</ion-select-option>
+                                <ion-select-option value="Korea Democratic People's Republic of">Korea,
+                                    Democratic
+                                    People's Republic
+                                    ion-select-option/option>
+                                    <ion-select-option value="Korea Republic of">Korea, Republic of
+                                    </ion-select-option>
+                                    <ion-select-option value="Kuwait">Kuwait</ion-select-option>
+                                    <ion-select-option value="Kyrgyzstan">Kyrgyzstan</ion-select-option>
+                                    <ion-select-option value="Lao Peoples Democratic Republic">Lao People's
+                                        Democratic Republic</ion-select-option>
+                                    <ion-select-option value="Latvia">Latvia</ion-select-option>
+                                    <ion-select-option value="Lebanon">Lebanon</ion-select-option>
+                                    <ion-select-option value="Lesotho">Lesotho</ion-select-option>
+                                    <ion-select-option value="Liberia">Liberia</ion-select-option>
+                                    <ion-select-option value="Libyan Arab Jamahiriya">Libyan Arab Jamahiriya
+                                    </ion-select-option>
+                                    <ion-select-option value="Liechtenstein">Liechtenstein</ion-select-option>
+                                    <ion-select-option value="Lithuania">Lithuania</ion-select-option>
+                                    <ion-select-option value="Luxembourg">Luxembourg</ion-select-option>
+                                    <ion-select-option value="Macao">Macao</ion-select-option>
+                                    <ion-select-option value="Macedonia The Former Yugoslav Republic of">
+                                        Macedonia,
+                                        The Former Yugoslav
+                                        ion-select-optionublic of</ion-select-option>
+                                    <ion-select-option value="Madagascar">Madagascar</ion-select-option>
+                                    <ion-select-option value="Malawi">Malawi</ion-select-option>
+                                    <ion-select-option value="Malaysia">Malaysia</ion-select-option>
+                                    <ion-select-option value="Maldives">Maldives</ion-select-option>
+                                    <ion-select-option value="Mali">Mali</ion-select-option>
+                                    <ion-select-option value="Malta">Malta</ion-select-option>
+                                    <ion-select-option value="Marshall Islands">Marshall Islands
+                                    </ion-select-option>
+                                    <ion-select-option value="Martinique">Martinique</ion-select-option>
+                                    <ion-select-option value="Mauritania">Mauritania</ion-select-option>
+                                    <ion-select-option value="Mauritius">Mauritius</ion-select-option>
+                                    <ion-select-option value="Mayotte">Mayotte</ion-select-option>
+                                    <ion-select-option value="Mexico">Mexico</ion-select-option>
+                                    <ion-select-option value="Micronesia Federated States of">Micronesia,
+                                        Federated
+                                        States of</ion-select-option>
+                                    <ion-select-option value="Moldova Republic of">Moldova, Republic of
+                                    </ion-select-option>
+                                    <ion-select-option value="Monaco">Monaco</ion-select-option>
+                                    <ion-select-option value="Mongolia">Mongolia</ion-select-option>
+                                    <ion-select-option value="Montenegro">Montenegro</ion-select-option>
+                                    <ion-select-option value="Montserrat">Montserrat</ion-select-option>
+                                    <ion-select-option value="Morocco">Morocco</ion-select-option>
+                                    <ion-select-option value="Mozambique">Mozambique</ion-select-option>
+                                    <ion-select-option value="Myanmar">Myanmar</ion-select-option>
+                                    <ion-select-option value="Namibia">Namibia</ion-select-option>
+                                    <ion-select-option value="Nauru">Nauru</ion-select-option>
+                                    <ion-select-option value="Nepal">Nepal</ion-select-option>
+                                    <ion-select-option value="Netherlands">Netherlands</ion-select-option>
+                                    <ion-select-option value="Netherlands Antilles">Netherlands Antilles
+                                    </ion-select-option>
+                                    <ion-select-option value="New Caledonia">New Caledonia</ion-select-option>
+                                    <ion-select-option value="New Zealand">New Zealand</ion-select-option>
+                                    <ion-select-option value="Nicaragua">Nicaragua</ion-select-option>
+                                    <ion-select-option value="Niger">Niger</ion-select-option>
+                                    <ion-select-option value="Nigeria">Nigeria</ion-select-option>
+                                    <ion-select-option value="Niue">Niue</ion-select-option>
+                                    <ion-select-option value="Norfolk Island">Norfolk Island</ion-select-option>
+                                    <ion-select-option value="Northern Mariana Islands">Northern Mariana Islands
+                                    </ion-select-option>
+                                    <ion-select-option value="Norway">Norway</ion-select-option>
+                                    <ion-select-option value="Oman">Oman</ion-select-option>
+                                    <ion-select-option value="Pakistan">Pakistan</ion-select-option>
+                                    <ion-select-option value="Palau">Palau</ion-select-option>
+                                    <ion-select-option value="Palestinian Territory Occupied">Palestinian
+                                        Territory, Occupied</ion-select-option>
+                                    <ion-select-option value="Panama">Panama</ion-select-option>
+                                    <ion-select-option value="Papua New Guinea">Papua New Guinea
+                                    </ion-select-option>
+                                    <ion-select-option value="Paraguay">Paraguay</ion-select-option>
+                                    <ion-select-option value="Peru">Peru</ion-select-option>
+                                    <ion-select-option value="Philippines">Philippines</ion-select-option>
+                                    <ion-select-option value="Pitcairn">Pitcairn</ion-select-option>
+                                    <ion-select-option value="Poland">Poland</ion-select-option>
+                                    <ion-select-option value="Portugal">Portugal</ion-select-option>
+                                    <ion-select-option value="Puerto Rico">Puerto Rico</ion-select-option>
+                                    <ion-select-option value="Qatar">Qatar</ion-select-option>
+                                    <ion-select-option value="Reunion">Reunion</ion-select-option>
+                                    <ion-select-option value="Romania">Romania</ion-select-option>
+                                    <ion-select-option value="Russian Federation">Russian Federation
+                                    </ion-select-option>
+                                    <ion-select-option value="Rwanda">Rwanda</ion-select-option>
+                                    <ion-select-option value="Saint Helena">Saint Helena</ion-select-option>
+                                    <ion-select-option value="Saint Kitts and Nevis">Saint Kitts and Nevis
+                                    </ion-select-option>
+                                    <ion-select-option value="Saint Lucia">Saint Lucia</ion-select-option>
+                                    <ion-select-option value="Saint Pierre and Miquelon">Saint Pierre and
+                                        Miquelon
+                                    </ion-select-option>
+                                    <ion-select-option value="Saint Vincent and The Grenadines">Saint Vincent
+                                        and
+                                        The Grenadines</ion-select-option>
+                                    <ion-select-option value="Samoa">Samoa</ion-select-option>
+                                    <ion-select-option value="San Marino">San Marino</ion-select-option>
+                                    <ion-select-option value="Sao Tome and Principe">Sao Tome and Principe
+                                    </ion-select-option>
+                                    <ion-select-option value="Saudi Arabia">Saudi Arabia</ion-select-option>
+                                    <ion-select-option value="Senegal">Senegal</ion-select-option>
+                                    <ion-select-option value="Serbia">Serbia</ion-select-option>
+                                    <ion-select-option value="Seychelles">Seychelles</ion-select-option>
+                                    <ion-select-option value="Sierra Leone">Sierra Leone</ion-select-option>
+                                    <ion-select-option value="Singapore">Singapore</ion-select-option>
+                                    <ion-select-option value="Slovakia">Slovakia</ion-select-option>
+                                    <ion-select-option value="Slovenia">Slovenia</ion-select-option>
+                                    <ion-select-option value="Solomon Islands">Solomon Islands
+                                    </ion-select-option>
+                                    <ion-select-option value="Somalia">Somalia</ion-select-option>
+                                    <ion-select-option value="South Georgia and The South Sandwich Islands">
+                                        South
+                                        Georgia and The South
+                                        ion-select-optiondwich Islands</ion-select-option>
+                                    <ion-select-option value="Spain">Spain</ion-select-option>
+                                    <ion-select-option value="Sri Lanka">Sri Lanka</ion-select-option>
+                                    <ion-select-option value="Sudan">Sudan</ion-select-option>
+                                    <ion-select-option value="Suriname">Suriname</ion-select-option>
+                                    <ion-select-option value="Svalbard and Jan Mayen">Svalbard and Jan Mayen
+                                    </ion-select-option>
+                                    <ion-select-option value="Swaziland">Swaziland</ion-select-option>
+                                    <ion-select-option value="Sweden">Sweden</ion-select-option>
+                                    <ion-select-option value="Switzerland">Switzerland</ion-select-option>
+                                    <ion-select-option value="Syrian Arab Republic">Syrian Arab Republic
+                                    </ion-select-option>
+                                    <ion-select-option value="Taiwan">Taiwan</ion-select-option>
+                                    <ion-select-option value="Tajikistan">Tajikistan</ion-select-option>
+                                    <ion-select-option value="Tanzania United Republic of">Tanzania, United
+                                        Republic of</ion-select-option>
+                                    <ion-select-option value="Thailand">Thailand</ion-select-option>
+                                    <ion-select-option value="Timor-leste">Timor-leste</ion-select-option>
+                                    <ion-select-option value="Togo">Togo</ion-select-option>
+                                    <ion-select-option value="Tokelau">Tokelau</ion-select-option>
+                                    <ion-select-option value="Tonga">Tonga</ion-select-option>
+                                    <ion-select-option value="Trinidad and Tobago">Trinidad and Tobago
+                                    </ion-select-option>
+                                    <ion-select-option value="Tunisia">Tunisia</ion-select-option>
+                                    <ion-select-option value="Turkey">Turkey</ion-select-option>
+                                    <ion-select-option value="Turkmenistan">Turkmenistan</ion-select-option>
+                                    <ion-select-option value="Turks and Caicos Islands">Turks and Caicos Islands
+                                    </ion-select-option>
+                                    <ion-select-option value="Tuvalu">Tuvalu</ion-select-option>
+                                    <ion-select-option value="Uganda">Uganda</ion-select-option>
+                                    <ion-select-option value="Ukraine">Ukraine</ion-select-option>
+                                    <ion-select-option value="United Arab Emirates">United Arab Emirates
+                                    </ion-select-option>
+                                    <ion-select-option value="United Kingdom">United Kingdom</ion-select-option>
+                                    <ion-select-option value="United States">United States</ion-select-option>
+                                    <ion-select-option value="United States Minor Outlying Islands">United
+                                        States Minor Outlying Islands </ion-select-option>
+                                    <ion-select-option value="Uruguay">Uruguay</ion-select-option>
+                                    <ion-select-option value="Uzbekistan">Uzbekistan</ion-select-option>
+                                    <ion-select-option value="Vanuatu">Vanuatu</ion-select-option>
+                                    <ion-select-option value="Venezuela">Venezuela</ion-select-option>
+                                    <ion-select-option value="Viet Nam">Viet Nam</ion-select-option>
+                                    <ion-select-option value="Virgin Islands British">Virgin Islands,
+                                        British</ion-select-option>
+                                    <ion-select-option value="Virgin Islands US">Virgin Islands, U.S.
+                                    </ion-select-option>
+                                    <ion-select-option value="Wallis and Futuna">Wallis and Futuna
+                                    </ion-select-option>
+                                    <ion-select-option value="Western Sahara">Western Sahara
+                                    </ion-select-option>
+                                    <ion-select-option value="Yemen">Yemen</ion-select-option>
+                                    <ion-select-option value="Zambia">Zambia</ion-select-option>
+                                    <ion-select-option value="Zimbabwe">Zimbabwe</ion-select-option> -->
+                            </ion-select>
+                        </ion-item>
+                    </ion-list>
+
+
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Email Address</ion-label>
+                        <ion-input type="Email" placeholder="Please enter" [(ngModel)]="OwnerDetails.EmailAddress">
+                        </ion-input>
+                    </ion-item>
+
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Mobile Number</ion-label>
+                        <ion-input type="tel" placeholder="Please enter" [(ngModel)]="OwnerDetails.MobileNumber">
+                        </ion-input>
+                    </ion-item>
+
+                    <ion-list>
+                        <ion-item>
+                            <ion-label position="stacked">Marital Status</ion-label>
+                            <ion-select interface="action-sheet" placeholder="Please Select"
+                                [(ngModel)]="OwnerDetails.MaritalStatus">
+                                <ion-select-option value="in_community">In Community of Property</ion-select-option>
+                                <ion-select-option value="out_community">Out of Community of Property
+                                </ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-list>
+
+                    <!-- <ion-item lines="none">
+                        <ion-label position="stacked">Spouse Name</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="OwnerDetails.SpouseName"></ion-input>
+                    </ion-item>
+
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Spouse Surname</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="OwnerDetails.SpouseSurname">
+                        </ion-input>
+                    </ion-item>
+
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Spouse ID Number</ion-label>
+                        <ion-input type="number" placeholder="Please enter" [(ngModel)]="OwnerDetails.SpouseIDNumber">
+                        </ion-input>
+                    </ion-item> -->
+
+                </ion-card-content>
+            </ion-card>
+
+            <hr>
+
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>Owner Home Address</ion-card-title>
+                </ion-card-header>
+
+                <ion-card-content>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Street Number</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="OwnerDetails.StreetNumber">
+                        </ion-input>
+                    </ion-item>
+
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Street Name</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="OwnerDetails.StreetName"></ion-input>
+                    </ion-item>
+
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Suburb</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="OwnerDetails.Suburb"></ion-input>
+                    </ion-item>
+
+                    <ion-item lines="none">
+                        <ion-label position="stacked">City</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="OwnerDetails.City"></ion-input>
+                    </ion-item>
+
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Postal Code</ion-label>
+                        <ion-input type="Number" placeholder="Please enter" [(ngModel)]="OwnerDetails.PostalCode">
+                        </ion-input>
+                    </ion-item>
+                </ion-card-content>
+            </ion-card>
+            <hr>
+
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>Outlet Contact Details</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <div class="salecontact">
+                        <div class="radiobox">
+                            <ion-label position="stacked" size="12">Sales</ion-label>
+                            <ion-radio-group [(ngModel)]="SalesSelector">
+                                <div class="radioitem">
+                                    <ion-radio id="yes" value="yes"></ion-radio>
+                                    <ion-label for="yes">Owner</ion-label>
+                                </div>
+                                <div class="radioitem">
+                                    <ion-radio id="no" value="no"></ion-radio>
+                                    <ion-label for="no">New Contact</ion-label>
+                                </div>
+                            </ion-radio-group>
+                        </div>
+                        <div class="newcontact" *ngIf="SalesSelector == 'no'">
+                            <div class="my-2">
+                                <h4>Sale Contact</h4>
+                                <ion-item lines="none">
+                                    <ion-label position="stacked">Name</ion-label>
+                                    <ion-input type="text" placeholder="Please enter"
+                                        [(ngModel)]="OwnerDetails.SalesName"></ion-input>
+                                </ion-item>
+
+                                <ion-item lines="none">
+                                    <ion-label position="stacked">Email Address</ion-label>
+                                    <ion-input type="email" placeholder="Please enter"
+                                        [(ngModel)]="OwnerDetails.SalesEmail"></ion-input>
+                                </ion-item>
+
+                                <ion-item lines="none">
+                                    <ion-label position="stacked">Mobile Number</ion-label>
+                                    <ion-input type="tel" placeholder="Please enter"
+                                        [(ngModel)]="OwnerDetails.SalesMobile"></ion-input>
+                                </ion-item>
+                                <hr>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="salecontact">
+                        <div class="radiobox">
+                            <ion-label position="stacked" size="12">Delivery</ion-label>
+                            <ion-radio-group [(ngModel)]="DeliverySelector">
+                                <div class="radioitem">
+                                    <ion-radio id="yes" value="yes"></ion-radio>
+                                    <ion-label for="yes">Owner</ion-label>
+                                </div>
+                                <div class="radioitem">
+                                    <ion-radio id="no" value="no"></ion-radio>
+                                    <ion-label for="no">New Contact</ion-label>
+                                </div>
+                            </ion-radio-group>
+                        </div>
+                        <div class="newcontact" *ngIf="DeliverySelector == 'no'">
+                            <div class="my-2">
+                                <h4>Delivery Contact</h4>
+                                <ion-item lines="none">
+                                    <ion-label position="stacked">Name</ion-label>
+                                    <ion-input type="text" placeholder="Please enter"
+                                        [(ngModel)]="OwnerDetails.DeliveryName"></ion-input>
+                                </ion-item>
+
+                                <ion-item lines="none">
+                                    <ion-label position="stacked">Email Address</ion-label>
+                                    <ion-input type="email" placeholder="Please enter"
+                                        [(ngModel)]="OwnerDetails.DeliveryEmail"></ion-input>
+                                </ion-item>
+
+                                <ion-item lines="none">
+                                    <ion-label position="stacked">Mobile Number</ion-label>
+                                    <ion-input type="tel" placeholder="Please enter"
+                                        [(ngModel)]="OwnerDetails.DeliveryMobile"></ion-input>
+                                </ion-item>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="salecontact">
+                        <div class="radiobox">
+                            <ion-label position="stacked" size="12">Finance</ion-label>
+                            <ion-radio-group [(ngModel)]="FinanceSelector">
+                                <div class="radioitem">
+                                    <ion-radio id="yes" value="yes"></ion-radio>
+                                    <ion-label for="yes">Owner</ion-label>
+                                </div>
+                                <div class="radioitem">
+                                    <ion-radio id="no" value="no"></ion-radio>
+                                    <ion-label for="no">New Contact</ion-label>
+                                </div>
+                            </ion-radio-group>
+                        </div>
+                        <div class="newcontact" *ngIf="FinanceSelector == 'no'">
+                            <div class="my-2">
+                                <h4>Finance Contact</h4>
+                                <ion-item lines="none">
+                                    <ion-label position="stacked">Name</ion-label>
+                                    <ion-input type="text" placeholder="Please enter"
+                                        [(ngModel)]="OwnerDetails.FinanceName"></ion-input>
+                                </ion-item>
+
+                                <ion-item lines="none">
+                                    <ion-label position="stacked">Email Address</ion-label>
+                                    <ion-input type="email" placeholder="Please enter"
+                                        [(ngModel)]="OwnerDetails.FinanceEmail"></ion-input>
+                                </ion-item>
+
+                                <!-- <ion-item lines="none">
+                                    <ion-label position="stacked">Pin Code</ion-label>
+                                    <ion-input type="email" placeholder="Please enter"
+                                        [(ngModel)]="OwnerDetails.FinancePincode"></ion-input>
+                                </ion-item> -->
+
+                                <ion-item lines="none">
+                                    <ion-label position="stacked">Mobile Number</ion-label>
+                                    <ion-input type="tel" placeholder="Please enter"
+                                        [(ngModel)]="OwnerDetails.FinanceMobile"></ion-input>
+                                </ion-item>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="salecontact">
+                        <div class="radiobox">
+                            <ion-label position="stacked" size="12">Orders</ion-label>
+                            <ion-radio-group [(ngModel)]="OrdersSelector">
+                                <div class="radioitem">
+                                    <ion-radio id="yes" value="yes"></ion-radio>
+                                    <ion-label for="yes">Owner</ion-label>
+                                </div>
+                                <div class="radioitem">
+                                    <ion-radio id="no" value="no"></ion-radio>
+                                    <ion-label for="no">New Contact</ion-label>
+                                </div>
+                            </ion-radio-group>
+                        </div>
+                        <div class="newcontact" *ngIf="OrdersSelector == 'no'">
+                            <div class="my-2">
+                                <h4>Orders Contact</h4>
+                                <ion-item lines="none">
+                                    <ion-label position="stacked">Name</ion-label>
+                                    <ion-input type="text" placeholder="Please enter" ngModel></ion-input>
+                                </ion-item>
+
+                                <ion-item lines="none">
+                                    <ion-label position="stacked">Email Address</ion-label>
+                                    <ion-input type="email" placeholder="Please enter" ngModel></ion-input>
+                                </ion-item>
+
+                                <ion-item lines="none">
+                                    <ion-label position="stacked">Mobile Number</ion-label>
+                                    <ion-input type="tel" placeholder="Please enter" ngModel></ion-input>
+                                </ion-item>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+
+                </ion-card-content>
+            </ion-card>
+            <hr>
+        </div>
+        <div class="w-100 h-100" *ngIf="currentSlide == 'financial-information'">
+
+            <ion-card>
+                <ion-card-content>
+                    <ion-list>
+                        <ion-item>
+                            <ion-label position="stacked">How do you want to pay for your account?</ion-label>
+                            <ion-select interface="action-sheet" placeholder="Please Select"
+                                [(ngModel)]="FinancialInformation.PayForYourAccount">
+                                <ion-select-option value="cwo">CWO - Paymnet needs to be made before delivery - 2.5%
+                                    discount applicable</ion-select-option>
+                                <ion-select-option value="fl07">FL07 - Seven days from date of invoice date 2% discount
+                                    applicable</ion-select-option>
+                                <ion-select-option value="fl14">FL14 - Fourteen days from invoice date - 1% discount
+                                    applicable</ion-select-option>
+                                <ion-select-option value="fl21">FL21 - Twenty one days from invoice date - 0.5% discount
+                                    applicable</ion-select-option>
+                                <ion-select-option value="fl30">FL30 - Thirty days from invoice date - 0% discount
+                                    applicable</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-list>
+
+                    <div class="radiobox">
+                        <ion-label position="stacked" size="12">Payment Method</ion-label>
+                        <ion-radio-group [(ngModel)]="FinancialInformation.PaymentMethod">
+                            <div class="radioitem">
+                                <ion-radio id="yes" value="EFT"></ion-radio>
+                                <ion-label for="yes">EFT</ion-label>
+                            </div>
+                            <div class="radioitem">
+                                <ion-radio id="no" value="Cash"></ion-radio>
+                                <ion-label for="no">Cash</ion-label>
+                            </div>
+                        </ion-radio-group>
+                    </div>
+
+                    <div class="radiobox">
+                        <ion-label position="stacked">Do you have any collateral available as security for your
+                            credit
+                            limit?</ion-label>
+                        <ion-radio-group [(ngModel)]="FinancialInformation.CreditLimit">
+                            <div class="radioitem">
+                                <ion-radio id="yes" value="yes"></ion-radio>
+                                <ion-label for="yes">Yes</ion-label>
+                            </div>
+                            <div class="radioitem">
+                                <ion-radio id="no" value="no"></ion-radio>
+                                <ion-label for="no">No</ion-label>
+                            </div>
+                        </ion-radio-group>
+                    </div>
+
+
+                    <ion-item lines="none">
+                        <ion-label position="stacked">VAT Number</ion-label>
+                        <ion-input type="Number" placeholder="Please enter"
+                            [(ngModel)]="FinancialInformation.VatNumber"></ion-input>
+                    </ion-item>
+
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Date when the business started trading</ion-label>
+                        <ion-datetime placeholder="DD/MM/YYYY" [(ngModel)]="FinancialInformation.VatNumber">
+                        </ion-datetime>
+                    </ion-item>
+
+                    <div class="radiobox">
+                        <ion-label position="stacked">Ownership of building</ion-label>
+                        <ion-radio-group [(ngModel)]="FinancialInformation.OwnershipSelector">
+                            <div class="radioitem">
+                                <ion-radio id="yes" value="leasedpremises"></ion-radio>
+                                <ion-label for="yes">Leased premises</ion-label>
+                            </div>
+                            <div class="radioitem">
+                                <ion-radio id="no" value="ownthebuilding"></ion-radio>
+                                <ion-label for="no">Own the building</ion-label>
+                            </div>
+                        </ion-radio-group>
+                    </div>
+
+                    <div class="radiobox">
+                        <ion-label position="stacked">Property is still bonded with the bank?</ion-label>
+                        <ion-radio-group [(ngModel)]="FinancialInformation.PropertybondedSelector">
+                            <div class="radioitem">
+                                <ion-radio id="yes" value="yes"></ion-radio>
+                                <ion-label for="yes">Yes</ion-label>
+                            </div>
+                            <div class="radioitem">
+                                <ion-radio id="no" value="no"></ion-radio>
+                                <ion-label for="no">No</ion-label>
+                            </div>
+                        </ion-radio-group>
+                    </div>
+
+                    <div class="radiobox">
+                        <ion-label position="stacked">Property available as security?</ion-label>
+                        <ion-radio-group [(ngModel)]="FinancialInformation.PropertySecurity">
+                            <div class="radioitem">
+                                <ion-radio id="yes" value="yes"></ion-radio>
+                                <ion-label for="yes">Yes</ion-label>
+                            </div>
+                            <div class="radioitem">
+                                <ion-radio id="no" value="no"></ion-radio>
+                                <ion-label for="no">No</ion-label>
+                            </div>
+                        </ion-radio-group>
+                    </div>
+                </ion-card-content>
+            </ion-card>
+
+        </div>
+
+        <div class="w-100 h-100" *ngIf="currentSlide == 'affordability'">
+
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>Income</ion-card-title>
+                </ion-card-header>
+
+                <ion-card-content>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Gross Income</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="Affordability.GrossIncome">
+                        </ion-input>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Net Income </ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="Affordability.NetIncome"></ion-input>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Other Income </ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="Affordability.OtherIncome">
+                        </ion-input>
+                    </ion-item>
+                </ion-card-content>
+            </ion-card>
+            <hr>
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>Expenses</ion-card-title>
+                </ion-card-header>
+
+                <ion-card-content>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Property Expense </ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="Affordability.PropertyExpense">
+                        </ion-input>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Vehicle Expense </ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="Affordability.VehicleExpense">
+                        </ion-input>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Credit Agreements </ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="Affordability.CreditAgreements">
+                        </ion-input>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Other Expenses </ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="Affordability.OtherExpenses">
+                        </ion-input>
+                    </ion-item>
+                </ion-card-content>
+            </ion-card>
+            <hr>
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>Total</ion-card-title>
+                </ion-card-header>
+
+                <ion-card-content>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Total Income</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="Affordability.TotalIncome">
+                        </ion-input>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Total Expenses </ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="Affordability.TotalExpenses">
+                        </ion-input>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">Total Available</ion-label>
+                        <ion-input placeholder="Please enter" [(ngModel)]="Affordability.TotalAvailable">
+                        </ion-input>
+                    </ion-item>
+                </ion-card-content>
+            </ion-card>
+            <hr>
+        </div>
+
+
+        <div class="w-100 h-100" *ngIf="currentSlide == 'affordability-doc'">
+
+            <ion-card>
+
+                <ion-card-content>
+                    <ion-list>
+                        <ion-item>
+                            <ion-label position="stacked">What is your storage capacity in cases?</ion-label>
+                            <ion-select interface="action-sheet" placeholder="Please Select"
+                                [(ngModel)]="Affordability.StorageCapacityinCases">
+                                <ion-select-option value="1">10 - 50</ion-select-option>
+                                <ion-select-option value="2">60 - 100</ion-select-option>
+                                <ion-select-option value="3">101 - 200</ion-select-option>
+                                <ion-select-option value="4">201 +</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-list>
+
+                    <div class="my-3">
+
+
+                        <ion-card-title>Please upload the following documents</ion-card-title>
+
+                        <div class="fileupload">
+                            <ion-label> Photo of ID </ion-label>
+                            <ion-label> {{imageError}} </ion-label>
+                            <div class="text-center">{{ selectedFile }}</div>
+                            <input type="file" name="photo" style="position: absolute;opacity: 0;"
+                                (change)="fileChangeEvent($event)" #fileInp [(ngModel)]="Affordability.PhotoOfID">
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">
+                                    <ion-icon name="checkmark-circle" color="success"></ion-icon>
+                                </span>
+                                <input type="text" class="form-control border" placeholder="Choose file"
+                                    aria-label="Amount (to the nearest dollar)">
+                                <input type="file" name="form-control" style="position: absolute;opacity: 0;"
+                                    (change)="fileChangeEvent($event)" #fileInp>
+                                <span class="input-group-text">
+                                    <ion-icon name="trash" color="danger"></ion-icon>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="fileupload">
+                            <ion-label>Photo of liquor license</ion-label>
+                            <ion-label> {{imageError}} </ion-label>
+                            <div class="text-center">{{ selectedFile }}</div>
+                            <input type="file" name="photo" style="position: absolute;opacity: 0;"
+                                (change)="fileChangeEvent($event)" #fileInp
+                                [(ngModel)]="Affordability.PhotoOfLiquorLicense">
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">
+                                    <ion-icon name="checkmark-circle" color="success"></ion-icon>
+                                </span>
+                                <input type="text" class="form-control border" placeholder="Choose file"
+                                    aria-label="Amount (to the nearest dollar)">
+                                <input type="file" name="form-control" style="position: absolute;opacity: 0;"
+                                    (change)="fileChangeEvent($event)" #fileInp>
+                                <span class="input-group-text">
+                                    <ion-icon name="trash" color="danger"></ion-icon>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="fileupload">
+                            <ion-label>Photo of liquor license renewal receipt</ion-label>
+                            <ion-label> {{imageError}} </ion-label>
+                            <div class="text-center">{{ selectedFile }}</div>
+                            <input type="file" name="photo" style="position: absolute;opacity: 0;"
+                                (change)="fileChangeEvent($event)" #fileInp [(ngModel)]="Affordability.RenewalReceipt">
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">
+                                    <ion-icon name="checkmark-circle" color="success"></ion-icon>
+                                </span>
+                                <input type="text" class="form-control border" placeholder="Choose file"
+                                    aria-label="Amount (to the nearest dollar)">
+                                <input type="file" name="form-control" style="position: absolute;opacity: 0;"
+                                    (change)="fileChangeEvent($event)" #fileInp>
+                                <span class="input-group-text">
+                                    <ion-icon name="trash" color="danger"></ion-icon>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="fileupload">
+                            <ion-label>Spouse ID if applicable</ion-label>
+                            <ion-label> {{imageError}} </ion-label>
+                            <div class="text-center">{{ selectedFile }}</div>
+                            <input type="file" name="photo" style="position: absolute;opacity: 0;"
+                                (change)="fileChangeEvent($event)" #fileInp
+                                [(ngModel)]="Affordability.SpouseIDApplicable">
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">
+                                    <ion-icon name="checkmark-circle" color="success"></ion-icon>
+                                </span>
+                                <input type="text" class="form-control border" placeholder="Choose file"
+                                    aria-label="Amount (to the nearest dollar)">
+                                <input type="file" name="form-control" style="position: absolute;opacity: 0;"
+                                    (change)="fileChangeEvent($event)" #fileInp>
+                                <span class="input-group-text">
+                                    <ion-icon name="trash" color="danger"></ion-icon>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </ion-card-content>
+            </ion-card>
+        </div>
+
+
+        <div class="w-100" *ngIf="currentSlide == 'declaration'">
+            <ion-card>
+                <ion-card-content>
+                    <div class="mt-2">
+                        <div class="radiobox">
+                            <ion-label position="stacked">Do you have a current application pending for
+                                debt-restructuring or alleviation ?</ion-label>
+                            <ion-radio-group [(ngModel)]="Declaration.Alleviation">
+                                <div class="radioitem">
+                                    <ion-radio value="custom" id="yes" value="yes"></ion-radio>
+                                    <ion-label for="yes">Yes</ion-label>
+                                </div>
+                                <div class="radioitem">
+                                    <ion-radio value="custom-checked" id="no" value="no"></ion-radio>
+                                    <ion-label for="no">No</ion-label>
+                                </div>
+                            </ion-radio-group>
+                        </div>
+                    </div>
+
+                    <div class="mt-2">
+                        <ion-item lines="none">
+                            <ion-checkbox slot="start" [(ngModel)]="privacy"></ion-checkbox>
+                            <ion-text class="text-small mt-3">I hereby declare that all information provided is
+                                correct
+                            </ion-text>
+                        </ion-item>
+
+                    </div>
+                    <div class="my-2 textblock">
+                        <h4>Please sign the below:</h4>
+                        <div class="g-fs-14 mb-3 d-flex">
+                            <ul>
+                                <li>NCA Compliance for Sole Trader </li>
+                                <li>Trading terms </li>
+                                <li>Deed of Surety </li>
+                            </ul>
+                        </div>
+                        <div> <svg class="bd-placeholder-img img-thumbnail" width="100%" height="200"
+                                xmlns="http://www.w3.org/2000/svg" role="img"
+                                aria-label="A generic square placeholder image with a white border around it, making it resemble a photograph taken with an old instant camera: 200x200"
+                                preserveAspectRatio="xMidYMid slice" focusable="false">
+                                <title>A generic square placeholder image with a white border around it, making
+                                    it
+                                    resemble a
+                                    photograph taken with an old instant camera</title>
+                                <rect width="100%" height="100%" fill="#868e96"></rect><text x="15%" y="50%"
+                                    fill="#dee2e6" dy=".3em">E-SIGNITURE + Fill in capability
+                                </text>
+                            </svg>
+                        </div>
+                    </div>
+                </ion-card-content>
+            </ion-card>
+        </div>
+
+        <div class="w-100" *ngIf="currentSlide == 'credit-check'">
+            <ion-label> {{slide}} </ion-label>
+            <ion-card>
+                <ion-card-content>
+                    <div class="alert alert-warning" role="alert">
+                        Credit Check in progress
+                    </div>
+
+                    <div class="alert alert-success" role="alert">
+                        Credit Check Complete
+                    </div>
+                </ion-card-content>
+            </ion-card>
+        </div>
+
+        <div class="w-100" *ngIf="currentSlide == 'poi-upload'">
+            <ion-label> {{imageError}} </ion-label>
+
+            <div class="g-fs-14 my-2 justify-content-center">
+                Please upload a copy of your latest proof of income.
+            </div>
+            <div class="g-fs-14 mb-3 d-flex justify-content-center">
+                Example : Bank statement etc
+            </div>
+
+            <div class="g-fs-14 mb-3 d-flex justify-content-center">
+                Max file size 2 MB <br> File format : PDF | JPG
+            </div>
+
+            <div class="text-center">{{ selectedFile }}</div>
+            <input type="file" name="photo" style="position: absolute;opacity: 0;" (change)="fileChangeEvent($event)"
+                #fileInp>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">
+                    <ion-icon name="checkmark-circle" color="success"></ion-icon>
+                </span>
+                <input type="text" class="form-control border" placeholder="Choose file"
+                    aria-label="Amount (to the nearest dollar)" value="{{ this.selectedFile }}">
+                <input type="file" name="form-control" style="position: absolute;opacity: 0;"
+                    (change)="fileChangeEvent($event)" #fileInp>
+                <span class="input-group-text">
+                    <ion-icon name="trash" color="danger"></ion-icon>
+                </span>
+            </div>
+            <!-- <div class="input-group mb-3">
+                <span class="input-group-text"><ion-icon name="checkmark-circle" color="success"></ion-icon></span>
+                <input type="text" class="form-control border" placeholder="Choose file" aria-label="Amount (to the nearest dollar)" value="{{ this.selectedFile[1] }}">
+                <input type="file" name="form-control" style="position: absolute;opacity: 0;" (change)="fileChangeEvent($event)" #fileInp2>
+                <span class="input-group-text"><ion-icon name="trash" color="danger"></ion-icon></span>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text"><ion-icon name="checkmark-circle" color="success"></ion-icon></span>
+                <input type="text" class="form-control border" placeholder="Choose file" aria-label="Amount (to the nearest dollar)" value="{{ this.selectedFile[2] }}">
+                <input type="file" name="form-control" style="position: absolute;opacity: 0;" (change)="fileChangeEvent($event)" #fileInp3>
+                <span class="input-group-text"><ion-icon name="trash" color="danger"></ion-icon></span>
+            </div> -->
+        </div>
+
+        <div class="w-100" *ngIf="currentSlide == 'final-confirmation'">
+
+            <div class="d-flex justify-content-center align-items-center">
+                <img src="../../assets/completed-img.jpg" alt="" class="preview-image driverfront">
+            </div>
+
+            <!-- <ion-icon class="w-100 mt-4" name="checkmark-circle" id="completionIcon"></ion-icon> -->
+            <h4 class="text-center">Thank You</h4>
+            <div class="text-center mx-auto mt-4 mb-4" id="driversLicensediv1">
+                <span class="text-center">We will be in touch to take your first order</span>
+            </div>
+
+        </div>
+
+        <div class="w-100" *ngIf="currentSlide == ''">
+            <div class="d-flex justify-content-center align-items-center">
+                <img src="../../assets/error-img.jpg" alt="" class="preview-image driverfront">
+            </div>
+
+            <!-- <ion-icon class="w-100 mt-4" name="checkmark-circle" id="completionIcon"></ion-icon> -->
+            <h4 class="text-center">Error</h4>
+            <div class="text-center mx-auto mt-4 mb-4" id="driversLicensediv1">
+                <span class="text-center">Something went wrong</span>
+            </div>
+        </div>
+
+        <div class="w-100" *ngIf="currentSlide == 'identity-invalid'">
+            <ion-text>
+                <h4>The provided information is not valid</h4>
+            </ion-text>
+        </div>
+
+    </ng-container>
+
+
+</ion-content>
+
+<ion-footer class="ion-no-border ion-padding">
+    <ion-toolbar class="ion-no-border">
+        <div class="full-width flex align-items-center justify-content-space-between flex-row">
+
+            <ion-button fill="outline" color="dark" slot="start"
+                *ngIf="currentSlide !== 'entity-information' && currentSlide !=='final-confirmation'">
+                <ion-text onclick="history.back()">
+                    Back
+                </ion-text>
+            </ion-button>
+            <ion-button *ngIf="currentSlide == 'entity-information'" (click)="takeStep()" expand="block">
+                Next
+            </ion-button>
+
+            <ion-button *ngIf="currentSlide == 'liquor-license'" (click)="takeStep()">
+                Next
+            </ion-button>
+            <ion-button *ngIf="currentSlide == 'owner-details'" strong (click)="takeStep()">
+                Next
+            </ion-button>
+            <ion-button *ngIf="currentSlide == 'financial-information'" strong (click)="takeStep()">
+                Next
+            </ion-button>
+            <ion-button *ngIf="currentSlide == 'identity-back'" strong (click)="takeStep()">
+                Next
+            </ion-button>
+            <ion-button *ngIf="currentSlide == 'affordability'" strong (click)="takeStep()">
+                Next
+            </ion-button>
+            <ion-button *ngIf="currentSlide == 'affordability-doc'" strong (click)="takeStep()">
+                Next
+            </ion-button>
+            <ion-button *ngIf="currentSlide == 'identity-invalid'" strong (click)="goBackHome()">
+                Home
+            </ion-button>
+            <ion-button *ngIf="currentSlide == 'declaration'" [disabled]="" strong (click)="takeStep()">
+                Next
+            </ion-button>
+
+            <ion-button *ngIf="currentSlide == 'credit-check'" strong (click)="takeStep()">
+                Next
+            </ion-button>
+
+            <ion-button *ngIf="currentSlide == 'poi-upload'" [disabled]="" strong (click)="takeStep()">
+                Upload
+            </ion-button>
+
+            <!-- <ion-button  style="width: 120px" strong  color="primary" [style.visibility]="isEnd ? 'hidden' : ''" (click)="onNextButtonTouched()">
+                Next
+            </ion-button> -->
+        </div>
+    </ion-toolbar>
+    <ion-text size="small">
+        <div class="ion-text-center small">Do you need assistance? Please contact our help centre <strong>0860 000
+                722</strong>
+        </div>
+    </ion-text>
+
+</ion-footer>
